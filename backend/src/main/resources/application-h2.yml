@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: etimeshouse
+  
+  datasource:
+    url: jdbc:h2:mem:etimeshouse
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+  
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:db/data_sample.sql
+      continue-on-error: false
+  
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# Configuration JWT
+jwt:
+  secret: votre_secret_jwt_tres_long_et_securise_minimum_256_bits_changez_cela_en_production_123456789012345678901234567890
+  expiration: 86400000 # 24 heures en millisecondes
+
+# Configuration serveur
+server:
+  port: 1000
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Logging
+logging:
+  level:
+    com.etimeshouse: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

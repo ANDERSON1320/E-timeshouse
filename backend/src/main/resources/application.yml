@@ -1,0 +1,46 @@
+spring:
+  profiles:
+    active: h2
+  application:
+    name: etimeshouse
+  
+  datasource:
+    url: jdbc:mysql://localhost:3306/e_timeshouse?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: ceejay123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# Configuration JWT
+jwt:
+  secret: votre_secret_jwt_tres_long_et_securise_minimum_256_bits_changez_cela_en_production_123456789012345678901234567890
+  expiration: 86400000 # 24 heures en millisecondes
+
+# Configuration serveur
+server:
+  port: 1000
+  error:
+    include-message: always
+    include-binding-errors: always
+
+# Logging
+logging:
+  level:
+    com.etimeshouse: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
