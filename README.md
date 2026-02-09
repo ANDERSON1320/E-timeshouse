@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # E-TimesHouse - Site E-Commerce de Montres
 
 Projet complet de site e-commerce pour la vente de montres, développé avec Spring Boot (backend) et Angular (frontend).
@@ -358,3 +359,7 @@ Pour toute question ou problème, consulter la documentation ou créer une issue
 **Développé avec ❤️ pour E-TimesHouse**
 
 
+=======
+# times-house
+Site web de vente de montre 
+>>>>>>> a04189487f507fe10e6051a31b72a3c04da6036c
