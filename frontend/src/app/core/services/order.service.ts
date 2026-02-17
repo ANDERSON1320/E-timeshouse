@@ -45,13 +45,20 @@ export interface CreateOrderRequest {
   providedIn: 'root'
 })
 export class OrderService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUserOrders(page: number = 0, size: number = 10): Observable<OrderPage> {
     const params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
     return this.http.get<OrderPage>(`${environment.apiUrl}/orders`, { params });
+  }
+
+  getAllOrders(page: number = 0, size: number = 10): Observable<OrderPage> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+    return this.http.get<OrderPage>(`${environment.apiUrl}/admin/orders`, { params });
   }
 
   getOrderById(id: number): Observable<Order> {

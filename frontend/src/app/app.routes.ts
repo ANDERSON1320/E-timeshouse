@@ -11,6 +11,9 @@ export const routes: Routes = [
   { path: 'orders', loadComponent: () => import('./features/orders/order-list/order-list.component').then(m => m.OrderListComponent), canActivate: [authGuard] },
   { path: 'profile', loadComponent: () => import('./features/auth/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authGuard] },
   { path: 'admin', loadComponent: () => import('./features/admin/admin-dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent), canActivate: [adminGuard] },
+  { path: 'admin/watches', loadComponent: () => import('./features/admin/admin-watches/admin-watches.component').then(m => m.AdminWatchesComponent), canActivate: [adminGuard] },
+  { path: 'admin/watches/add', loadComponent: () => import('./features/admin/admin-add-watch/admin-add-watch.component').then(m => m.AdminAddWatchComponent), canActivate: [adminGuard] },
+  { path: 'admin/orders', loadComponent: () => import('./features/admin/admin-orders/admin-orders.component').then(m => m.AdminOrdersComponent), canActivate: [adminGuard] },
   { path: 'login', loadComponent: () => import('./features/auth/login/login.component').then(m => m.LoginComponent) },
   { path: 'register', loadComponent: () => import('./features/auth/register/register.component').then(m => m.RegisterComponent) },
   { path: '**', redirectTo: '' }

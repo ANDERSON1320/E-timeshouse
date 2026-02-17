@@ -1,18 +1,17 @@
 spring:
-  profiles:
-    active: h2
+
   application:
     name: etimeshouse
   
   datasource:
-    url: jdbc:mysql://localhost:3306/e_timeshouse?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/timehouse_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: ceejay123
     driver-class-name: com.mysql.cj.jdbc.Driver
   
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
@@ -30,7 +29,7 @@ jwt:
 
 # Configuration serveur
 server:
-  port: 1000
+  port: 8090
   error:
     include-message: always
     include-binding-errors: always

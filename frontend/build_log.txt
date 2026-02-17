@@ -1,0 +1,2 @@
+An unhandled exception occurred: Configuration 'development' is not set in the workspace.
+See "C:\Users\ander\AppData\Local\Temp\ng-dyxNoX\angular-errors.log" for further details.

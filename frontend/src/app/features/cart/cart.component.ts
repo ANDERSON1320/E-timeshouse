@@ -9,91 +9,140 @@ import { environment } from '../../../environments/environment';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <div class="container">
-      <h1>Mon panier</h1>
-      <div *ngIf="cart && cart.items.length > 0; else emptyCart">
+    <div class="container" style="max-width: 800px; margin-top: 2rem;">
+      <h1>Mon Panier</h1>
+      
+      <div *ngIf="cart && cart.items.length > 0; else emptyCart" class="cart-container">
         <div class="cart-items">
           <div *ngFor="let item of cart.items" class="cart-item">
-            <img [src]="item.watchImageUrl || 'https://via.placeholder.com/100'" [alt]="item.watchName" class="item-image">
-            <div class="item-details">
+            <div class="item-info">
               <h3>{{ item.watchName }}</h3>
-              <p>{{ item.watchBrand }}</p>
+              <p class="brand">{{ item.watchBrand }}</p>
               <p class="price">{{ item.watchPrice | number:'1.0-0' }} {{ environment.currency }}</p>
             </div>
-            <div class="item-quantity">
-              <button (click)="updateQuantity(item.id, item.quantity - 1)">-</button>
-              <span>{{ item.quantity }}</span>
-              <button (click)="updateQuantity(item.id, item.quantity + 1)">+</button>
+            
+            <div class="item-actions">
+              <div class="quantity-controls">
+                <button (click)="updateQuantity(item.id, item.quantity - 1)" class="btn-qty">-</button>
+                <span>{{ item.quantity }}</span>
+                <button (click)="updateQuantity(item.id, item.quantity + 1)" class="btn-qty">+</button>
+              </div>
+              <p class="subtotal">{{ item.subtotal | number:'1.0-0' }} {{ environment.currency }}</p>
+              <button (click)="removeItem(item.id)" class="btn-remove">×</button>
             </div>
-            <div class="item-subtotal">
-              <p>{{ item.subtotal | number:'1.0-0' }} {{ environment.currency }}</p>
-            </div>
-            <button (click)="removeItem(item.id)" class="btn-danger">Supprimer</button>
           </div>
         </div>
+
         <div class="cart-summary">
-          <h2>Résumé</h2>
-          <p>Total articles: {{ cart.totalItems }}</p>
-          <p class="total">Total: {{ cart.totalAmount | number:'1.0-0' }} {{ environment.currency }}</p>
-          <a routerLink="/checkout" class="btn-primary">Passer la commande</a>
+          <div class="summary-row">
+            <span>Total articles:</span>
+            <span>{{ cart.totalItems }}</span>
+          </div>
+          <div class="summary-row total-row">
+            <span>Total:</span>
+            <span>{{ cart.totalAmount | number:'1.0-0' }} {{ environment.currency }}</span>
+          </div>
+          <a routerLink="/checkout" class="btn btn-primary full-width">Passer la commande</a>
         </div>
       </div>
+
       <ng-template #emptyCart>
-        <p class="empty-cart">Votre panier est vide.</p>
-        <a routerLink="/watches" class="btn-primary">Continuer les achats</a>
+        <div class="text-center empty-state">
+          <p>Votre panier est vide.</p>
+          <a routerLink="/watches" class="btn btn-primary">Découvrir nos montres</a>
+        </div>
       </ng-template>
     </div>
   `,
   styles: [`
-    .cart-items {
-      margin-bottom: 30px;
+    h1 { margin-bottom: 2rem; }
+    
+    .cart-container {
+      display: grid;
+      gap: 2rem;
     }
+
     .cart-item {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 20px;
-      padding: 20px;
-      background: white;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
       border-radius: 8px;
-      margin-bottom: 15px;
+      margin-bottom: 1rem;
+      background: white;
     }
-    .item-image {
-      width: 100px;
-      height: 100px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    .item-details {
-      flex: 1;
-    }
-    .item-quantity {
+
+    .item-info h3 { margin: 0 0 0.5rem 0; font-size: 1.1rem; }
+    .brand { color: var(--secondary); font-size: 0.9rem; margin: 0; }
+    .price { font-weight: bold; margin-top: 0.5rem; }
+
+    .item-actions {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 1.5rem;
     }
-    .item-quantity button {
-      width: 30px;
-      height: 30px;
-      border: 1px solid #ddd;
-      background: white;
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid var(--border);
       border-radius: 4px;
-      cursor: pointer;
+      padding: 0.2rem;
     }
+
+    .btn-qty {
+      background: none;
+      border: none;
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .btn-qty:hover { background-color: #f0f0f0; border-radius: 4px; }
+
+    .subtotal { font-weight: bold; font-size: 1.1rem; min-width: 100px; text-align: right; }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: var(--accent);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0 0.5rem;
+    }
+
     .cart-summary {
-      background: white;
-      padding: 20px;
+      background: #f8f9fa;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .total-row {
+      font-weight: bold;
+      font-size: 1.2rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .full-width { width: 100%; text-align: center; }
+
+    .empty-state {
+      padding: 4rem 2rem;
+      background: #f8f9fa;
       border-radius: 8px;
     }
-    .total {
-      font-size: 24px;
-      font-weight: bold;
-      color: #1976d2;
-    }
-    .empty-cart {
-      text-align: center;
-      padding: 40px;
-      font-size: 18px;
-    }
+    .empty-state p { margin-bottom: 1.5rem; font-size: 1.1rem; color: var(--secondary); }
   `]
 })
 export class CartComponent implements OnInit {

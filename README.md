@@ -343,20 +343,20 @@ curl -X POST http://localhost:8080/api/cart/items \
   }'
 ```
 
-## 👥 Comptes par défaut
+##  Comptes par défaut
 
 Après exécution de `data_sample.sql` :
 
 - **Admin** : `admin@etimeshouse.com` / `admin123`
 - **User** : `user@example.com` / `user123`
 
-## 📞 Support
+##  Support
 
 Pour toute question ou problème, consulter la documentation ou créer une issue.
 
 ---
 
-**Développé avec ❤️ pour E-TimesHouse**
+**Développé par CJVISION**
 
 
 =======

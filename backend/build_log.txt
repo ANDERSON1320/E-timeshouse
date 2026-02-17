@@ -1,0 +1,60 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.etimeshouse:etimeshouse >---------------------
+[INFO] Building E-TimesHouse 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ etimeshouse ---
+[INFO] Deleting C:\Users\ander\E-timeshouse\backend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ etimeshouse ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 3 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ etimeshouse ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 48 source files with javac [debug release 21] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /C:/Users/ander/E-timeshouse/backend/src/main/java/com/etimeshouse/util/JwtUtil.java: C:\Users\ander\E-timeshouse\backend\src\main\java\com\etimeshouse\util\JwtUtil.java uses or overrides a deprecated API.
+[INFO] /C:/Users/ander/E-timeshouse/backend/src/main/java/com/etimeshouse/util/JwtUtil.java: Recompile with -Xlint:deprecation for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ etimeshouse ---
+[INFO] Copying 1 resource from src\test\resources to target\test-classes
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ etimeshouse ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 1 source file with javac [debug release 21] to target\test-classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ etimeshouse ---
+[INFO] Tests are skipped.
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ etimeshouse ---
+[INFO] Building jar: C:\Users\ander\E-timeshouse\backend\target\etimeshouse-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.0:repackage (repackage) @ etimeshouse ---
+[INFO] Replacing main artifact C:\Users\ander\E-timeshouse\backend\target\etimeshouse-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to C:\Users\ander\E-timeshouse\backend\target\etimeshouse-1.0.0.jar.original
+[INFO] 
+[INFO] --- install:3.1.1:install (default-install) @ etimeshouse ---
+[INFO] Installing C:\Users\ander\E-timeshouse\backend\pom.xml to C:\Users\ander\.m2\repository\com\etimeshouse\etimeshouse\1.0.0\etimeshouse-1.0.0.pom
+[INFO] Installing C:\Users\ander\E-timeshouse\backend\target\etimeshouse-1.0.0.jar to C:\Users\ander\.m2\repository\com\etimeshouse\etimeshouse\1.0.0\etimeshouse-1.0.0.jar
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  22.975 s
+[INFO] Finished at: 2026-02-16T22:30:36Z
+[INFO] ------------------------------------------------------------------------

@@ -33,14 +33,46 @@
               "src/styles.css"
             ],
             "scripts": []
-          }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "buildTarget": "etimeshouse:build",
             "port": 4200
-          }
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "etimeshouse:build:production"
+            },
+            "development": {
+              "buildTarget": "etimeshouse:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
@@ -67,5 +99,3 @@
     "analytics": "a002b8e1-4ed0-4033-90aa-ea15c2c19278"
   }
 }
-
-
