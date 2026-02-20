@@ -11,6 +11,12 @@ import java.util.Optional;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Page<Order> findByUserId(Long userId, Pageable pageable);
-    Optional<Order> findByOrderNumber(String orderNumber);
-}
 
+    Optional<Order> findByOrderNumber(String orderNumber);
+
+    @org.springframework.data.jpa.repository.Query("SELECT SUM(o.totalAmount) FROM Order o")
+    java.math.BigDecimal calculateTotalRevenue();
+
+    @org.springframework.data.jpa.repository.Query("SELECT SUM(i.quantity) FROM OrderItem i")
+    Long calculateTotalItemsSold();
+}

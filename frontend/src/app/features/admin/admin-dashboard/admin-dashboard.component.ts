@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { AdminService, DashboardStats } from '../../../core/services/admin.service';
+import { Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,8 +19,35 @@ import { AuthService } from '../../../core/services/auth.service';
         </div>
       </div>
 
-      <!-- quickStats cards could go here -->
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12" *ngIf="stats$ | async as stats">
+        <!-- Revenue -->
+        <div class="bg-luxury-black text-white p-6 rounded-sm shadow-lg">
+          <p class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-2">Revenu Total</p>
+          <div class="flex items-baseline">
+            <span class="text-3xl font-serif font-bold text-luxury-gold">{{ stats.totalRevenue | number:'1.0-0' }}</span>
+            <span class="ml-2 text-sm text-gray-400">{{ environment.currency }}</span>
+          </div>
+        </div>
 
+        <!-- Orders -->
+        <div class="bg-white p-6 border border-gray-100 rounded-sm shadow-sm">
+          <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Total Commandes</p>
+          <div class="flex items-baseline">
+            <span class="text-3xl font-serif font-bold text-luxury-black">{{ stats.totalOrders }}</span>
+          </div>
+        </div>
+
+        <!-- Sales (Items) -->
+        <div class="bg-white p-6 border border-gray-100 rounded-sm shadow-sm">
+          <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Articles Vendus</p>
+          <div class="flex items-baseline">
+            <span class="text-3xl font-serif font-bold text-luxury-black">{{ stats.totalSales }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Feature Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         
         <!-- Manage Watches -->
@@ -65,10 +95,16 @@ import { AuthService } from '../../../core/services/auth.service';
   styles: []
 })
 export class AdminDashboardComponent implements OnInit {
+  stats$: Observable<DashboardStats> | null = null;
+  protected readonly environment = environment;
 
-  constructor(public authService: AuthService) { }
+  constructor(
+    public authService: AuthService,
+    private adminService: AdminService
+  ) { }
 
   ngOnInit(): void {
+    this.stats$ = this.adminService.getDashboardStats();
   }
 
 }

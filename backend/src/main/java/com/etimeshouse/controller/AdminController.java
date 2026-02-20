@@ -39,8 +39,7 @@ public class AdminController {
                         user.getFirstName(),
                         user.getLastName(),
                         user.getRole().name(),
-                        user.getCreatedAt()
-                ))
+                        user.getCreatedAt()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
@@ -62,6 +61,9 @@ public class AdminController {
         OrderDto order = orderService.updateOrderStatus(id, orderStatus);
         return ResponseEntity.ok(order);
     }
+
+    @GetMapping("/stats")
+    public ResponseEntity<com.etimeshouse.dto.DashboardStatsDto> getDashboardStats() {
+        return ResponseEntity.ok(orderService.getDashboardStats());
+    }
 }
-
-

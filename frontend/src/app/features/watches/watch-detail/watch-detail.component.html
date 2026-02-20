@@ -1,0 +1,216 @@
+<div class="min-h-screen bg-gray-50 pt-20 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumbs -->
+        <nav class="flex mb-8 text-sm text-gray-500" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a routerLink="/" class="hover:text-primary transition-colors">Accueil</a></li>
+                <li class="flex items-center space-x-2">
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 11H3a1 1 0 110-2h7.586l-3.293-3.293a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <a routerLink="/watches" class="hover:text-primary transition-colors">Montres</a>
+                </li>
+                <li class="flex items-center space-x-2" *ngIf="watch">
+                    <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M7.293 14.707a1 1 0 010-1.414L10.586 11H3a1 1 0 110-2h7.586l-3.293-3.293a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span class="text-gray-900 font-medium">{{ watch.name }}</span>
+                </li>
+            </ol>
+        </nav>
+
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100" *ngIf="watch">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <!-- Image Gallery section -->
+                <div class="p-8 lg:p-12 bg-gray-50 flex flex-col items-center">
+                    <div
+                        class="relative w-full aspect-square rounded-xl overflow-hidden bg-white shadow-inner mb-6 group">
+                        <img [src]="selectedImage" [alt]="watch.name"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        <div
+                            class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4 overflow-x-auto pb-2 w-full justify-center">
+                        <button *ngFor="let img of watch.images" (click)="selectedImage = img.imageUrl"
+                            class="relative w-24 h-24 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-all"
+                            [class.border-primary]="selectedImage === img.imageUrl"
+                            [class.border-transparent]="selectedImage !== img.imageUrl"
+                            [class.opacity-70]="selectedImage !== img.imageUrl">
+                            <img [src]="img.imageUrl" class="w-full h-full object-cover">
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Product Details section -->
+                <div class="p-8 lg:p-12 flex flex-col">
+                    <div class="mb-6">
+                        <span class="text-xs font-bold uppercase tracking-widest text-primary mb-2 block">{{ watch.brand
+                            }}</span>
+                        <h1 class="text-4xl font-extrabold text-gray-900 leading-tight mb-4 tracking-tight">{{
+                            watch.name }}</h1>
+                        <div class="flex items-center space-x-4 mb-6">
+                            <span class="text-3xl font-light text-primary">{{ getCurrentPrice() | currency:'EUR'
+                                }}</span>
+                            <span
+                                class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase tracking-wider"
+                                *ngIf="getCurrentStock() > 0">
+                                En Stock
+                            </span>
+                            <span
+                                class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full uppercase tracking-wider"
+                                *ngIf="getCurrentStock() <= 0">
+                                Rupture de Stock
+                            </span>
+                        </div>
+                        <p class="text-gray-600 leading-relaxed text-lg border-l-4 border-gray-100 pl-6 italic mb-8">
+                            "{{ watch.description }}"
+                        </p>
+                    </div>
+
+                    <!-- Variants selection -->
+                    <div class="space-y-8 mb-10">
+                        <!-- Sizes -->
+                        <div *ngIf="hasSizes()">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-sm font-semibold text-gray-900 uppercase tracking-wider">Taille du
+                                    boîtier</span>
+                                <span
+                                    class="text-xs text-gray-500 underline cursor-pointer hover:text-primary transition-colors">Guide
+                                    des tailles</span>
+                            </div>
+                            <div class="flex flex-wrap gap-3">
+                                <button *ngFor="let size of getUniqueSizes()" (click)="selectSize(size)"
+                                    class="px-6 py-2 rounded-lg border text-sm font-medium transition-all duration-300"
+                                    [class.bg-primary]="selectedSize === size"
+                                    [class.text-white]="selectedSize === size"
+                                    [class.border-primary]="selectedSize === size"
+                                    [class.bg-white]="selectedSize !== size"
+                                    [class.text-gray-700]="selectedSize !== size"
+                                    [class.border-gray-200]="selectedSize !== size"
+                                    [class.hover:border-primary]="selectedSize !== size">
+                                    {{ size }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Colors -->
+                        <div *ngIf="hasColors()">
+                            <span
+                                class="text-sm font-semibold text-gray-900 uppercase tracking-wider block mb-4">Couleur
+                                du bracelet / cadran</span>
+                            <div class="flex flex-wrap gap-4">
+                                <button *ngFor="let color of getUniqueColors()" (click)="selectColor(color)"
+                                    class="group relative flex flex-col items-center"
+                                    [class.scale-105]="selectedColor === color">
+                                    <div class="w-12 h-12 rounded-full border-2 transition-all p-1"
+                                        [class.border-primary]="selectedColor === color"
+                                        [class.border-transparent]="selectedColor !== color">
+                                        <div class="w-full h-full rounded-full shadow-inner"
+                                            [style.background-color]="color"></div>
+                                    </div>
+                                    <span
+                                        class="mt-2 text-[10px] uppercase tracking-tighter text-gray-500 font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+                                        {{ color }}
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Quantity -->
+                        <div>
+                            <span
+                                class="text-sm font-semibold text-gray-900 uppercase tracking-wider block mb-4">Quantité</span>
+                            <div class="flex items-center space-x-6">
+                                <div
+                                    class="flex items-center border border-gray-200 rounded-lg bg-gray-50 overflow-hidden shadow-sm">
+                                    <button (click)="quantity = (quantity > 1 ? quantity - 1 : 1)"
+                                        class="px-5 py-2 hover:bg-gray-100 transition-colors text-gray-600 font-bold">-</button>
+                                    <input type="number" [(ngModel)]="quantity"
+                                        class="w-16 text-center bg-white border-x border-gray-200 py-2 focus:outline-none font-bold text-gray-900"
+                                        min="1">
+                                    <button (click)="quantity = quantity + 1"
+                                        class="px-5 py-2 hover:bg-gray-100 transition-colors text-gray-600 font-bold">+</button>
+                                </div>
+                                <span class="text-xs text-gray-400 font-medium" *ngIf="getCurrentStock() > 0">
+                                    {{ getCurrentStock() }} unités disponibles
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-auto pt-8 border-t border-gray-100">
+                        <button (click)="addToCart()" [disabled]="getCurrentStock() <= 0"
+                            class="flex items-center justify-center space-x-3 w-full py-4 px-6 border-2 border-primary text-primary font-bold rounded-xl transition-all duration-300 hover:bg-primary/5 active:scale-95 disabled:opacity-50 disabled:grayscale disabled:pointer-events-none uppercase tracking-widest text-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                            </svg>
+                            <span>Ajouter au panier</span>
+                        </button>
+                        <button (click)="buyNow()" [disabled]="getCurrentStock() <= 0"
+                            class="flex items-center justify-center space-x-3 w-full py-4 px-6 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary/40 active:scale-95 disabled:opacity-50 disabled:grayscale disabled:pointer-events-none uppercase tracking-widest text-sm">
+                            <span>Acheter maintenant</span>
+                        </button>
+                    </div>
+
+                    <!-- Features/Badges -->
+                    <div class="grid grid-cols-3 gap-4 mt-10">
+                        <div
+                            class="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl transition-transform hover:-translate-y-1">
+                            <div
+                                class="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center mb-3 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-900">Garantie 2
+                                ans</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl transition-transform hover:-translate-y-1">
+                            <div
+                                class="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center mb-3 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M5 13l4 4L19 7" />
+                                </svg>
+                            </div>
+                            <span
+                                class="text-[10px] font-bold uppercase tracking-widest text-gray-900">Authentique</span>
+                        </div>
+                        <div
+                            class="flex flex-col items-center text-center p-4 bg-gray-50 rounded-xl transition-transform hover:-translate-y-1">
+                            <div
+                                class="w-10 h-10 bg-white shadow-sm rounded-full flex items-center justify-center mb-3 text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                </svg>
+                            </div>
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-gray-900">Écrin de
+                                luxe</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div *ngIf="!watch" class="flex flex-col items-center justify-center min-h-[60vh]">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary mb-4"></div>
+            <p class="text-gray-500 font-medium">Chargement des détails de la montre...</p>
+        </div>
+    </div>
+</div>

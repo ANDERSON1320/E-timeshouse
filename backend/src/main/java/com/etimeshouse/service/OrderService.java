@@ -147,13 +147,24 @@ public class OrderService {
                             item.getWatch().getBrand(),
                             item.getQuantity(),
                             item.getUnitPrice(),
-                            item.getSubtotal()
-                    ))
+                            item.getSubtotal()))
                     .collect(Collectors.toList()));
         }
 
         return dto;
     }
+
+    public com.etimeshouse.dto.DashboardStatsDto getDashboardStats() {
+        BigDecimal totalRevenue = orderRepository.calculateTotalRevenue();
+        if (totalRevenue == null)
+            totalRevenue = BigDecimal.ZERO;
+
+        long totalOrders = orderRepository.count();
+
+        Long totalSales = orderRepository.calculateTotalItemsSold();
+        if (totalSales == null)
+            totalSales = 0L;
+
+        return new com.etimeshouse.dto.DashboardStatsDto(totalRevenue, totalOrders, totalSales);
+    }
 }
-
-

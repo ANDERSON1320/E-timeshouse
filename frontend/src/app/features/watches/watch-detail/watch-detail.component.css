@@ -1,0 +1,66 @@
+:host {
+    display: block;
+}
+
+.text-primary {
+    color: #c5a059;
+    /* Luxury gold color */
+}
+
+.bg-primary {
+    background-color: #c5a059;
+}
+
+.border-primary {
+    border-color: #c5a059;
+}
+
+.hover\:text-primary:hover {
+    color: #b38e4a;
+}
+
+.hover\:border-primary:hover {
+    border-color: #b38e4a;
+}
+
+.shadow-primary\/25 {
+    box-shadow: 0 4px 6px -1px rgba(197, 160, 89, 0.25), 0 2px 4px -1px rgba(197, 160, 89, 0.25);
+}
+
+.shadow-primary\/40 {
+    box-shadow: 0 10px 15px -3px rgba(197, 160, 89, 0.4), 0 4px 6px -2px rgba(197, 160, 89, 0.4);
+}
+
+/* Custom scrollbar for horizontal gallery */
+.overflow-x-auto::-webkit-scrollbar {
+    height: 4px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+    background: #e2e2e2;
+    border-radius: 10px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb:hover {
+    background: #c5a059;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: hide;
+    /* Or simply omit if 'appearance' is enough */
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
